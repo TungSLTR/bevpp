@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
-
+import AdProduct from './AdProductModel.js';
 const { DataTypes } = Sequelize;
 
 const Cthoadon = db.define('cthoadon', {
@@ -12,6 +12,10 @@ const Cthoadon = db.define('cthoadon', {
     masp: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        references: {
+            model: AdProduct,
+            key: "masp",
+          },
     },
     soluong: DataTypes.INTEGER,
     dongia: DataTypes.INTEGER,
@@ -19,7 +23,7 @@ const Cthoadon = db.define('cthoadon', {
 }, {
     freezeTableName: true
 });
-
+Cthoadon.belongsTo(AdProduct, { foreignKey: 'masp' });
 export default Cthoadon;
 
 (async () => {

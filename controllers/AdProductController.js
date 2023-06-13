@@ -10,6 +10,10 @@ export const getProducts = async (req, res) => {
     console.log(error.message);
   }
 };
+
+
+
+
 export const getProductById = async (req, res) => {
 
   try {
@@ -128,3 +132,4 @@ export const deleteProduct = async (req, res) => {
     console.log(error.message);
   }
 }
+

@@ -1,9 +1,9 @@
-import Product from "../models/ProductModel.js";
+import AdProduct from "../models/AdProductModel.js";
 import User from "../models/User.js";
 import Hoadon from "../models/ReceiptModel.js";
 import Cthoadon  from "../models/CTHDModel.js";
 import db from '../config/Database.js'; 
-
+import { Sequelize } from 'sequelize';
 export const addCtHoaDon = async (req, res) => {
     const transaction = await db.transaction();
   
@@ -35,5 +35,27 @@ export const addCtHoaDon = async (req, res) => {
       await transaction.rollback();
       console.log(error);
       res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+
+  export const getProductsDashboard = async (req, res) => {
+    try {
+      const response = await Cthoadon.findAll({
+        include: [{ model: AdProduct, as: 'sanpham' }], // Sử dụng alias 'sanpham' thay vì 'sanphams'
+        attributes: [
+          ['masp', 'type'], // Đổi tên cột thành 'type' để phù hợp với biểu đồ
+          [Sequelize.fn('sum', Sequelize.col('soluong')), 'value'],
+        ],
+        group: ['masp', 'sanpham.id'], // Sử dụng 'sanpham.id' thay vì 'sanphams.id'
+      });
+  
+      const data = response.map(item => ({
+        type: item.sanpham.tensp, // Sử dụng 'sanpham' thay vì 'sanphams'
+        value: item.dataValues.value,
+      }));
+  
+      res.status(200).json(data);
+    } catch (error) {
+      console.log(error.message);
     }
   };
