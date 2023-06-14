@@ -61,7 +61,7 @@ export const addCtHoaDon = async (req, res) => {
     }
   };
 
-// Tính tổng doanh thu
+  // Tính tổng doanh thu
 export const getTotalRevenue = async (req, res) => {
   try {
     const response = await Cthoadon.sum("tongtien");
