@@ -3,7 +3,8 @@ import User from "../models/User.js";
 import Hoadon from "../models/ReceiptModel.js";
 import Cthoadon  from "../models/CTHDModel.js";
 import db from '../config/Database.js'; 
-import { Sequelize } from 'sequelize';
+import { Sequelize, Op } from 'sequelize';
+
 export const addCtHoaDon = async (req, res) => {
     const transaction = await db.transaction();
   
@@ -59,3 +60,36 @@ export const addCtHoaDon = async (req, res) => {
       console.log(error.message);
     }
   };
+
+  // Tính tổng doanh thu
+export const getTotalRevenue = async (req, res) => {
+  try {
+    const response = await Cthoadon.sum("tongtien");
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// Tính tổng doanh thu của ngày hôm nay
+export const getTodayRevenue = async (req, res) => {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Đặt giờ về 00:00:00
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1); // Lấy ngày hôm sau để làm điểm kết thúc
+
+    const response = await Cthoadon.sum("tongtien", {
+      where: {
+        createdAt: {
+          [Op.gte]: today,
+          [Op.lt]: tomorrow,
+        },
+      },
+    });
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
