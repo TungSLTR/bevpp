@@ -72,3 +72,12 @@ export const getHoadonToday = async (req, res) => {
       console.log(error.message);
     }
   };
+
+export const getAllHoadon = async (req, res) => {
+  try {
+    const hoadon = await Hoadon.findAll()
+    res.status(200).json(hoadon);
+  } catch (error) {
+    console.log(error);
+  }
+}
