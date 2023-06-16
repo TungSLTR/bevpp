@@ -75,8 +75,44 @@ export const getHoadonToday = async (req, res) => {
 
 export const getAllHoadon = async (req, res) => {
   try {
-    const hoadon = await Hoadon.findAll()
+    const hoadon = await Hoadon.findAll({
+      order: [['mahd', 'ASC']],
+    })
     res.status(200).json(hoadon);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const editHoadon = async (req, res) => {
+  try {
+      const {mahd} = req.params
+       await Hoadon.update(req.body, {
+          where: {
+              mahd: mahd,
+          }
+      });
+      res.status(200).json({ msg: "review Updated" });
+  } catch (error) {
+      console.log(error.message);
+  }
+}
+
+export const getHoadonBymahd = async (req, res) => {
+  try {
+    const {mahd} = req.params
+    const hd =await Hoadon.findOne({where: {mahd: mahd}})
+    res.status(200).json(hd)
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const delHoadon = async (req, res) => {
+  try {
+    const {mahd} = req.params
+    const rest = await Hoadon.destroy({where :{mahd:mahd}})
+    res.status(200).json({msg:"Hoadon destroyed successfully"})
   } catch (error) {
     console.log(error);
   }
