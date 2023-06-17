@@ -25,6 +25,7 @@ import AdReview from "./routes/AdReviewRoute.js";
 import AdContact from "./routes/AdContactRoute.js";
 import Receipt from "./routes/ReceiptRoute.js";
 import Cthoadon from "./routes/CTHDRoute.js";
+import Email from "./routes/Email.js"
 
 const app = express();
 
@@ -61,6 +62,7 @@ app.use(cateprodRoute);
 app.use(ContactRoute);
 app.use(Receipt);
 app.use(Cthoadon);
+app.use(Email);
 
 app.listen(5000, () => {
   console.log("Server listening on port 5000");
