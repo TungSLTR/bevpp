@@ -17,7 +17,7 @@ const AdProduct = db.define('sanphams',{
     img: DataTypes.STRING,
     img_con: DataTypes.STRING,
     id_loailon: DataTypes.INTEGER,
-    id_loai: DataTypes.INTEGER,
+    id_loai: DataTypes.STRING,
     color: DataTypes.STRING,
     donvitinh: DataTypes.STRING,
     dinhluong: DataTypes.STRING,

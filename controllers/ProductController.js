@@ -90,11 +90,15 @@ export const getProductsByUrl = async (req, res) => {
       return res.status(404).json({ message: "Not found" });
     }
 
-    const products = await Product.findAll({
-      where: { [Op.or]: [{ id_loai: menu.id }, { id_loailon: menu.id }] },
+    const products = await Product.findAll();
+
+    const filteredProducts = products.filter((product) => {
+      const idLoaiArray = product.id_loai.split(','); // Chuyển chuỗi id_loai thành mảng
+      const idLoailonArray = product.id_loailon; // Chuyển chuỗi id_loailon thành mảng
+      return idLoaiArray.includes(menu.id.toString()) || idLoailonArray === menu.id.toString(); // Kiểm tra nếu menu.id xuất hiện trong mảng id_loai hoặc id_loailon
     });
 
-    const productIds = products.map((product) => product.id);
+    const productIds = filteredProducts.map((product) => product.id);
     const reviews = await Review.findAll({
       where: { masp: productIds },
     });
@@ -111,7 +115,7 @@ export const getProductsByUrl = async (req, res) => {
 
     const data = {
       name: menu.name,
-      products: products.map((product) => ({
+      products: filteredProducts.map((product) => ({
         ...product.toJSON(),
         reviews: reviewByProductId[product.id] || [], // Thêm mảng đánh giá vào thông tin sản phẩm
       })),
