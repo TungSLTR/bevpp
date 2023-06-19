@@ -1,6 +1,4 @@
 import express from "express";
-import multer from "multer";
-import path from "path";
 
 import { getProducts, getProductById, createProduct, updateProduct, deleteProduct } from "../controllers/AdProductController.js";
 const router = express.Router();
