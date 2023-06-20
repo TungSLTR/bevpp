@@ -64,14 +64,23 @@ export const getCartByMakh = async (req, res) => {
 
 export const deleteCart = async (req, res) => {
   try {
-    const {makh} = req.params
-    const {masp} = req.params
-    await Cart.destroy({
-      where: {
-        makh,
-        masp
-      }
-    });
+    const { makh } = req.params
+    const { masp } = req.params
+    if (masp == null) {
+      await Cart.destroy({
+        where: {
+          makh,
+        }
+      });
+    } else {
+      await Cart.destroy({
+        where: {
+          makh,
+          masp
+        }
+      });
+    }
+
 
     res.status(200).json({ msg: "Cart Deleted" });
   } catch (error) {
@@ -166,13 +175,13 @@ export const addMultipleToCart = async (req, res) => {
 
 export const sumThanhtien = async (req, res) => {
   try {
-    const {makh} = req.params
+    const { makh } = req.params
     const maspByMakh = await Cart.findAll({ where: { makh: makh } })
     if (!maspByMakh) {
       return res.status(404).json({ message: `Masp not found for masp ${makh}` });
     }
     const productByMasp = [];
-    let thanhtien =0  
+    let thanhtien = 0
     for (let i = 0; i < maspByMakh.length; i++) {
       const pro = await Product.findOne({ where: { id: maspByMakh[i].masp } });
       productByMasp.push(pro);
