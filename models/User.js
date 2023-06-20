@@ -18,6 +18,10 @@ const User = db.define('user',{
     vaitro: {
         type :DataTypes.INTEGER,
         default: 0
+    },
+    resetCode : {
+        type : DataTypes.INTEGER,
+
     }
 },{
     freezeTableName:true

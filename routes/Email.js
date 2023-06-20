@@ -14,23 +14,23 @@ var transporter = nodemailer.createTransport({
 
 
 // Định nghĩa router
-router.get('/admin/send-email', (req, res) => {
-    const mailOptions = {
-        from: 'phuthuyjay04@gmail.com',
-        to: 'thanhtung17112003@gmail.com',
-        subject: 'Gà',
-        text: 'Gà vc.'
-    };
+// router.get('/admin/send-email', (req, res) => {
+//     const mailOptions = {
+//         from: 'phuthuyjay04@gmail.com',
+//         to: 'thanhtung17112003@gmail.com',
+//         subject: 'Gà',
+//         text: 'Gà vc.'
+//     };
 
-    // Gửi email
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.log(error);
-            res.status(500).send('Internal Server Error');
-        } else {
-            console.log('Email sent: ' + info.response);
-            res.send('Email sent successfully');
-        }
-    });
-});
+//     // Gửi email
+//     transporter.sendMail(mailOptions, (error, info) => {
+//         if (error) {
+//             console.log(error);
+//             res.status(500).send('Internal Server Error');
+//         } else {
+
+//             res.send('Email sent successfully');
+//         }
+//     });
+// });
 export default router

@@ -2,6 +2,7 @@ import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import nodemailer from 'nodemailer';
 // import cookie from 'cookie';
 
 dotenv.config();
@@ -86,7 +87,7 @@ export const userLogin = async (req, res) => {
                 sameSite: "strict",
             })
             const userPlain = user.get({ plain: true });
-            const { matkhau, ...other } = userPlain;
+            const { matkhau,resetCode, ...other } = userPlain;
             return res.status(200).json({ ...other, accessToken });
         }
     } catch (err) {
@@ -135,7 +136,7 @@ export const getUserByMakh = async (req, res) => {
             return res.status(404).json({ message: "Không có user" });
         }
         const userPlain = user.get({ plain: true });
-        const { matkhau, ...other } = userPlain;
+        const { matkhau,resetCode, ...other } = userPlain;
         const accessToken = generateAccessToken(user);
             const refreshToken = generateRefreshToken(user);
             refreshTokens.push(refreshToken);
@@ -181,3 +182,88 @@ export const getTenkh = async (req, res) => {
       res.status(500).json({ message: "Đã xảy ra lỗi" });
     }
   };
+
+var transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    service: 'gmail',
+    auth: {
+        user: 'phuthuyjay04@gmail.com',
+        pass: 'yrtrrfgwpdgphdga'
+    }
+});
+  
+  // API để yêu cầu khôi phục mật khẩu
+  export const requestPasswordReset = async (req, res) => {
+    try {
+      const  email  = req.body.email;
+  
+   
+      const user = await User.findOne({ where: { email } });
+      if (!user) {
+        return res.status(404).json({ error: 'Email không tồn tại' });
+      }
+
+      const resetCodene = Math.floor(100000 + Math.random() * 900000)
+  
+    
+      await User.update( {resetCode: resetCodene} ,{ where: { makh:user.makh}})
+  
+    
+      const mailOptions = {
+        from: 'phuthuyjay04@gmail.com',
+        to: email,
+        subject: 'Khôi phục mật khẩu',
+        text: `Mã khôi phục mật khẩu của bạn là: ${resetCodene}`
+      };
+  
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+          return res.status(500).json({ error: 'Đã xảy ra lỗi khi gửi email' });
+        }
+        console.log('Email sent: ' + info.response);
+        res.status(200).json({ message: 'Email khôi phục mật khẩu đã được gửi' });
+  
+        setTimeout(async () => {
+          
+            await User.update({ resetCode: null }, { where: { makh: user.makh } });
+            console.log('Email deleted after 2 minutes');
+          }, 5 * 60 * 1000); // 5 phút 
+        
+      });
+     
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Đã xảy ra lỗi' });
+    }
+  };
+
+  export const resetPassword = async (req ,res) => {
+    try {
+        const resetCodefe = req.body.resetCode
+        const email = req.body.email
+        const user = await User.findOne({where:{ email: email}})
+        if (!user) {
+            return res.status(404).json({ error: 'Email không tồn tại' });
+        }
+        console.log(user);
+        console.log(email);
+        console.log( req.body.resetCode);
+        console.log(user.resetCode);
+        if(resetCodefe !== user.resetCode) {
+            return res.status(404).json({ error: 'Sai code' });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashed = await bcrypt.hash(req.body.matkhau, salt);
+        const matkhau = hashed
+
+        await User.update({matkhau:matkhau, secretCode : null},{where: {makh : user.makh}})
+        
+        res.status(200).json({ msg: "Password Updated" });
+
+    } catch (error) {   
+        console.log(error);
+    }
+  }
