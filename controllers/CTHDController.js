@@ -94,3 +94,15 @@ export const getTodayRevenue = async (req, res) => {
   }
 };
 
+export const getCTHDByMahd = async (req,res) =>{
+  try {
+    const mahd = req.body.mahd;
+    const cthds = await Cthoadon.findAll({where:{ mahd:mahd}});
+    if (!cthds) {
+      return res.status(404).json({ message: "Không tìm thấy cthoadon" });
+    }
+    res.status(200).json(cthds);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
