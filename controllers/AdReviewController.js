@@ -14,6 +14,7 @@ export const getReview = async(req, res) => {
 export const getReviewDashBoard = async (req, res) => {
     try {
       const reviews = await AdReview.findAll({
+        order: [['createdAt', 'ASC']],
         include: [
           {
             model: User,
