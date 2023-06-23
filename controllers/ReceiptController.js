@@ -53,26 +53,26 @@ export const getHoadonAll = async(req, res) => {
       }
 }
 export const getHoadonToday = async (req, res) => {
-    try {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0); // Đặt giờ về 00:00:00
-      const tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1); // Lấy ngày hôm sau để làm điểm kết thúc
-  
-      const response = await Hoadon.count("mahd", {
-        where: {
-          createdAt: {
-            [Op.gte]: today,
-            [Op.lt]: tomorrow,
-          },
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Đặt giờ về 00:00:00
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1); // Lấy ngày hôm sau để làm điểm kết thúc
+
+    const response = await Hoadon.count({
+      where: {
+        createdAt: {
+          [Op.gte]: today,
+          [Op.lt]: tomorrow,
         },
-      });
-  
-      res.status(200).json(response);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+      },
+    });
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 export const getAllHoadon = async (req, res) => {
   try {
