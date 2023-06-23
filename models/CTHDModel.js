@@ -19,7 +19,8 @@ const Cthoadon = db.define('cthoadon', {
     },
     soluong: DataTypes.INTEGER,
     dongia: DataTypes.INTEGER,
-    tongtien: DataTypes.INTEGER
+    tongtien: DataTypes.INTEGER,
+    tinhtrang: DataTypes.INTEGER,
 }, {
     freezeTableName: true
 });

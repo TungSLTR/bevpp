@@ -10,7 +10,7 @@ export const addCtHoaDon = async (req, res) => {
   
     try {
       const { mahd } = req.params;
-     const { masp, soluong, dongia, tongtien } = req.body;
+     const { masp, soluong, dongia } = req.body;
     
     
       // Tạo hóa đơn chi tiết và lưu vào cơ sở dữ liệu trong transaction
@@ -20,7 +20,7 @@ export const addCtHoaDon = async (req, res) => {
           masp: masp,
           soluong: soluong,
           dongia: dongia,
-          tongtien: tongtien,
+          tongtien: soluong*dongia,
         },
         { transaction }
       );
@@ -106,3 +106,25 @@ export const getCTHDByMahd = async (req,res) =>{
     console.log(error.message);
   }
 }
+
+export const getCthoadonByMakh = async (req, res) => {
+  try {
+    const  {makh}  = req.params;
+
+    const hoadons = await Hoadon.findAll({ where: { makh } });
+    if (!hoadons) {
+      return res.status(404).json({ message: "Không tìm thấy hoadon" });
+    }
+
+    const mahds = hoadons.map((hoadon) => hoadon.mahd);
+
+    const cthoadons = await Cthoadon.findAll({ where: { mahd: mahds } });
+    if (!cthoadons) {
+      return res.status(404).json({ message: "Không tìm thấy cthoadon" });
+    }
+
+    res.status(200).json(cthoadons);
+  } catch (error) {
+    res.status(500).json({ message: "Đã xảy ra lỗi" });
+  }
+};

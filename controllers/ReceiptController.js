@@ -2,6 +2,7 @@
 import Product from "../models/ProductModel.js";
 import User from "../models/User.js";
 import Hoadon from "../models/ReceiptModel.js";
+import Cthoadon  from "../models/CTHDModel.js";
 import { Sequelize, Op } from 'sequelize';
 export const addHoadon = async (req, res) => {
     try {
@@ -87,11 +88,13 @@ export const getAllHoadon = async (req, res) => {
 export const editHoadon = async (req, res) => {
   try {
       const {mahd} = req.params
+      const tinhtrang = req.body.tinhtrang
        await Hoadon.update(req.body, {
           where: {
               mahd: mahd,
           }
       });
+     await Cthoadon.update({tinhtrang:tinhtrang}, {where:{mahd:mahd}})
       res.status(200).json({ msg: "review Updated" });
   } catch (error) {
       console.log(error.message);
