@@ -115,8 +115,10 @@ export const delHoadon = async (req, res) => {
   try {
     const {mahd} = req.params
     const rest = await Hoadon.destroy({where :{mahd:mahd}})
+    await Cthoadon.destroy({where :{mahd:mahd}})
     res.status(200).json({msg:"Hoadon destroyed successfully"})
   } catch (error) {
     console.log(error);
   }
 }
+
