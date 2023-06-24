@@ -12,10 +12,7 @@ const Cthoadon = db.define('cthoadon', {
     masp: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        references: {
-            model: AdProduct,
-            key: "masp",
-          },
+        
     },
     soluong: DataTypes.INTEGER,
     dongia: DataTypes.INTEGER,
