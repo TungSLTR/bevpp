@@ -128,3 +128,88 @@ export const getCthoadonByMakh = async (req, res) => {
     res.status(500).json({ message: "Đã xảy ra lỗi" });
   }
 };
+
+export const getAllCthoadon = async (req, res) => {
+  try {
+    const cthoadon = await Cthoadon.findAll({
+      order: [['mahd', 'ASC']],
+    }
+     
+    )
+    res.status(200).json(cthoadon);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const delCTHoadon = async (req, res) => {
+  try {
+    const {mahd, masp} = req.params
+     await Cthoadon.destroy({where :{
+      mahd:mahd,
+      masp:masp
+    }})
+    const check = await Cthoadon.findOne({
+      where: {mahd:mahd}
+    })
+    if(!check){
+      await Hoadon.destroy({where:{
+        mahd:mahd
+      }})
+    }
+    res.status(200).json({msg:"CTHoadon destroyed successfully"})
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const editCTHoadon = async (req, res) => {
+  try {
+      const {mahd, masp} = req.params
+      await Cthoadon.update(
+        {
+          ...req.body,
+          tongtien: req.body.soluong * req.body.dongia
+        },
+        {
+          where: {
+            mahd: mahd,
+            masp: masp
+          }
+        }
+      );
+      const cthoadon = await Cthoadon.findAll({where:{
+        mahd: mahd,
+      }})
+      const sumTongtien = cthoadon.reduce((acc, cartItem) => {
+        return acc + cartItem.tongtien;
+      }, 0);
+      await Hoadon.update({
+        tongtien : sumTongtien,
+      },{
+        where:{
+          mahd:mahd
+        }
+      })
+      res.status(200).json({ msg: " Updated" });
+  } catch (error) {
+      console.log(error.message);
+  }
+}
+
+export const getCTHDByMahdnMasp = async (req, res) =>{
+  try {
+    const {mahd } = req.params;
+    const {masp} = req.params;
+    const cthds = await Cthoadon.findOne({where:{ 
+      mahd:mahd,
+      masp : masp
+    }});
+    if (!cthds) {
+      return res.status(404).json({ message: "Không tìm thấy cthoadon" });
+    }
+    res.status(200).json(cthds);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
