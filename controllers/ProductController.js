@@ -146,6 +146,19 @@ export const getProductById = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 }
+
+export const getProductByIdAccCart = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findOne({ where: { id: id} });
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
 export const getProductSale = async (req, res) => {
   try {
     const products = await Product.findAll({
