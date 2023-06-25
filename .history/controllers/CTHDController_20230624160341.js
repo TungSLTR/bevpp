@@ -10,7 +10,7 @@ export const addCtHoaDon = async (req, res) => {
   
     try {
       const { mahd } = req.params;
-     const { masp, soluong, dongia,tinhtrang } = req.body;
+     const { masp, soluong, dongia } = req.body;
     
     
       // Tạo hóa đơn chi tiết và lưu vào cơ sở dữ liệu trong transaction
@@ -20,7 +20,6 @@ export const addCtHoaDon = async (req, res) => {
           masp: masp,
           soluong: soluong,
           dongia: dongia,
-          tinhtrang : tinhtrang,
           tongtien: soluong*dongia,
         },
         { transaction }
@@ -52,7 +51,7 @@ export const addCtHoaDon = async (req, res) => {
       });
   
       const data = response.map(item => ({
-        type: item.sanpham?.tensp, // Sử dụng 'sanpham' thay vì 'sanphams'
+        type: item.sanpham.tensp, // Sử dụng 'sanpham' thay vì 'sanphams'
         value: item.dataValues.value,
       }));
   

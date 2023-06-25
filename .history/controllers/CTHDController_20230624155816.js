@@ -10,7 +10,7 @@ export const addCtHoaDon = async (req, res) => {
   
     try {
       const { mahd } = req.params;
-     const { masp, soluong, dongia,tinhtrang } = req.body;
+     const { masp, soluong, dongia } = req.body;
     
     
       // Tạo hóa đơn chi tiết và lưu vào cơ sở dữ liệu trong transaction
@@ -20,7 +20,6 @@ export const addCtHoaDon = async (req, res) => {
           masp: masp,
           soluong: soluong,
           dongia: dongia,
-          tinhtrang : tinhtrang,
           tongtien: soluong*dongia,
         },
         { transaction }
@@ -48,11 +47,11 @@ export const addCtHoaDon = async (req, res) => {
           ['masp', 'type'], // Đổi tên cột thành 'type' để phù hợp với biểu đồ
           [Sequelize.fn('sum', Sequelize.col('soluong')), 'value'],
         ],
-        group: ['masp', 'sanpham.id'], // Sử dụng 'sanpham.id' thay vì 'sanphams.id'
+        group: ['masp'], // Sử dụng 'masp' thay vì 'masp' và 'sanpham.id'
       });
   
       const data = response.map(item => ({
-        type: item.sanpham?.tensp, // Sử dụng 'sanpham' thay vì 'sanphams'
+        type: item.sanpham.tensp, // Sử dụng 'sanpham' thay vì 'sanphams'
         value: item.dataValues.value,
       }));
   

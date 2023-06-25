@@ -21,7 +21,7 @@ const Cthoadon = db.define('cthoadon', {
 }, {
     freezeTableName: true
 });
-Cthoadon.belongsTo(AdProduct, { foreignKey: 'masp' });
+Cthoadon.belongsTo(AdProduct, { foreignKey: 'masp', as: 'sanpham' });
 export default Cthoadon;
 
 (async () => {
