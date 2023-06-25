@@ -38,6 +38,7 @@ export const userRegister = async (req, res) => {
             email,
             diachi,
             sodienthoai,
+            vaitro : 0
         });
         res.status(201).json(user);
     } catch (err) {
