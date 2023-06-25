@@ -8,5 +8,5 @@ router.get('/admin/adproducts', getProducts);
 router.get('/admin/adproducts/:id', getProductById);
 router.patch('/admin/adproducts/:id', updateProduct);
 router.delete('/admin/adproducts/:id', deleteProduct);
-router.put("/admin/adproducts/tt/:id", updateStatusProduct);
+router.put("/admin/adproducts/:id", updateStatusProduct);
 export default router
