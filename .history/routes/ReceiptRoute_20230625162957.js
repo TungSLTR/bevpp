@@ -4,7 +4,7 @@ import express from 'express';
 const router = express.Router();
 
 router.get('/admin/counthoadon/hd',getHoadonAll);
-router.get('/admin/counthoadontoday/hdtoday',getHoadonToday);
+router.get('/admin/counthoadontoday/',getHoadonToday);
 router.post('/hoadon/:makh',addHoadon);
 router.delete('/hoadon/:mahd',deleteHoadon);
 router.get('/admin/hoadon',getAllHoadon);
