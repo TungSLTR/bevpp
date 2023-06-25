@@ -137,7 +137,14 @@ export const updateStatusProduct = async (req, res) => {
     const { id } = req.params;
     const { visible } = req.body;
 
-    await AdProduct.update({ visible: visible ? 0 : 1 }, { where: { id } });
+    const product = await AdProduct.findOne({ where: { id } });
+    if (!product) {
+      console.log("Product not found");
+      return res.status(404).json({ msg: "Product not found" });
+    }
+
+    product.visible = visible === 0 ? 0 : 1;
+    await product.save();
 
     res.sendStatus(200);
   } catch (error) {
