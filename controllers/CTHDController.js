@@ -10,7 +10,7 @@ export const addCtHoaDon = async (req, res) => {
   
     try {
       const { mahd } = req.params;
-     const { masp, soluong, dongia } = req.body;
+     const { masp, soluong, dongia,tinhtrang } = req.body;
     
     
       // Tạo hóa đơn chi tiết và lưu vào cơ sở dữ liệu trong transaction
@@ -20,6 +20,7 @@ export const addCtHoaDon = async (req, res) => {
           masp: masp,
           soluong: soluong,
           dongia: dongia,
+          tinhtrang : tinhtrang,
           tongtien: soluong*dongia,
         },
         { transaction }
