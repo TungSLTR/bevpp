@@ -29,6 +29,7 @@ const AdProduct = db.define('sanphams',{
     thuonghieu: DataTypes.STRING,
     thetich: DataTypes.STRING,
     url: DataTypes.STRING,
+    visible: DataTypes.INTEGER,
 },{
     freezeTableName:true
 });

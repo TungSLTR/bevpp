@@ -71,6 +71,7 @@ export const createProduct = async (req, res) => {
       thuonghieu,
       thetich,
       url,
+      visible: 0
     });
 
     res.status(201).json(product);
@@ -131,3 +132,16 @@ export const deleteProduct = async (req, res) => {
   }
 }
 
+export const updateStatusProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { visible } = req.body;
+
+    await AdProduct.update({ visible: visible ? 0 : 1 }, { where: { id } });
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ msg: "Server error" });
+  }
+};
