@@ -8,7 +8,9 @@ Product.belongsTo(Menu, { foreignKey: "id_loai" });
 // API endpoint để lấy tất cả các menu
 export const getProduct = async (req, res) => {
   try {
-    const products = await Product.findAll();
+    const products = await Product.findAll({
+      where: { visible: 0 },
+    });
     const productIds = products.map((product) => product.id);
     const reviews = await Review.findAll({
       where: { masp: productIds },
@@ -42,7 +44,7 @@ export const getProduct = async (req, res) => {
 export const getProductWithMaxPrice = async (req, res) => {
   try {
     const maxPrice = await Product.max('dongia');
-    const product = await Product.findOne({ where: { dongia: maxPrice } });
+    const product = await Product.findOne({ where: { dongia: maxPrice , visible: 0 } });
     res.json(product);
   } catch (err) {
     console.error(err);
@@ -62,6 +64,7 @@ export const getProductUrl = async (req, res) => {
           id: {
             [Op.not]: product.id, // Loại bỏ sản phẩm chính
           },
+           visible: 0 
         },
       });
     
@@ -90,7 +93,9 @@ export const getProductsByUrl = async (req, res) => {
       return res.status(404).json({ message: "Not found" });
     }
 
-    const products = await Product.findAll();
+    const products = await Product.findAll({
+      where: { visible: 0 },
+    });
 
     const filteredProducts = products.filter((product) => {
       const idLoaiArray = product.id_loai.split(','); // Chuyển chuỗi id_loai thành mảng
@@ -132,7 +137,7 @@ export const getProductsByUrl = async (req, res) => {
 export const getProductById = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Product.findOne({ where: { id: id } });
+    const product = await Product.findOne({ where: { id: id, visible: 0 } });
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
@@ -147,7 +152,8 @@ export const getProductSale = async (req, res) => {
       where: {
         giacu: {
           [Op.gt]: 0
-        }
+        },
+        visible: 0
       }
     });
     const productIds = products.map((product) => product.id);
