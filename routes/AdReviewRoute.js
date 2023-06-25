@@ -9,6 +9,6 @@ router.get('/admin/review/dashboard', getReviewDashBoard);
 router.patch("/admin/review/dashboard/:makh/:masp", updateReviewDashboard);
 router.get('/admin/review/:id', getReviewById);
 router.patch('/admin/review/:id', updateReview);
-router.delete('/admin/review/:id', deleteReview);
+router.delete('/admin/review/:makh&:masp', deleteReview);
 
 export default router
