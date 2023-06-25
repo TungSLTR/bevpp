@@ -25,7 +25,7 @@ router.post('/admin/payment/mail-thanhtoan', (req, res) => {
             <h1 style="text-align: center; margin-bottom: 30px; color: #333333;">Lời cảm ơn!</h1>
             <div style="color: #555555;">
               <p>Xin chào ${tenkh},</p>
-              <p>Cảm ơn bạn đã thanh toán hóa đơn. Chúng tôi rất trân trọng sự hỗ trợ và tin tưởng của bạn.</p>
+              <p>Cảm ơn bạn đã tin tưởng và mua sản phẩm của chúng tôi. Sản phẩm sẽ sớm đến tay bạn.</p>
               <p>Bạn có thể xem chi tiết hóa đơn bằng cách nhấp vào nút dưới đây:</p>
               <p style="text-align: center;">
                 <a href="vlxx.moe" style="display: inline-block; background-color: #4CAF50; color: #FFFFFF; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Xem hóa đơn</a>
