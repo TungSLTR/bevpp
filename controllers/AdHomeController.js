@@ -25,14 +25,13 @@ export const getHomeById = async (req, res) => {
 
 export const createHome = async (req, res) => {
   try {
-    const { sdt, diachi, gmail, mota, ten, motaFooter, imghead, imgfoot, img1, img2, img3,status } = req.body;
+    const { sdt, diachi, gmail, mota, ten, motaFooter,status } = req.body;
+    const {imghead, imgfoot,  imgslide } = req.files;
     
     const response = await AdHome.create({
-      imghead,
-      imgfoot,
-      img1,
-      img2,
-      img3 ,
+      imghead: imghead.name,
+      imgfoot: imgfoot.name,
+      imgslide: imgslide.map((file) => file.name).join(","),
       diachi,
       gmail,
       sdt,
@@ -51,7 +50,8 @@ export const createHome = async (req, res) => {
 
 export const updateHome = async (req, res) => {
   try {
-    const { sdt, diachi, gmail, mota, ten, motaFooter,imghead, imgfoot,img1,img2,img3} = req.body;
+    const { sdt, diachi, gmail, mota, ten, motaFooter} = req.body;
+    const {imgslide ,imghead, imgfoot} = req.files || {};
     const home = await AdHome.findOne({ where: { id: req.params.id } });
 
     if (!home) {
@@ -59,12 +59,10 @@ export const updateHome = async (req, res) => {
     }
 
     const updatedhome = await home.update({
-      
-      imghead: imghead !== "" ? imghead : "",
-      imgfoot: imgfoot !== "" ? imgfoot : "",
-      img1: img1 !== "" ? img1 : "",
-      img2: img2 !== "" ? img2 : "",
-      img3: img3 !== "" ? img3 : "",
+      imgslide: imgslide || imgslide ? imgslide.map((file) => file.name).join(",") : home.imgslide,
+      imghead: imghead.name !== "" ? imghead.name : "",
+      imgfoot: imgfoot.name !== "" ? imgfoot.name : "",
+
       sdt: sdt !== "" ? sdt : "",
       diachi: diachi !== "" ? diachi : "",
       gmail: gmail !== "" ? gmail : "",

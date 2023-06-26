@@ -15,9 +15,8 @@ const Home = db.define('home',{
     sdt: DataTypes.STRING,
     diachi: DataTypes.STRING,
     gmail: DataTypes.STRING,
-    img1: DataTypes.STRING,
-    img2: DataTypes.STRING,
-    img3: DataTypes.STRING,
+    imgslide: DataTypes.STRING,
+ 
     mota: DataTypes.STRING,
     motaFooter: DataTypes.STRING,
     status: DataTypes.INTEGER,
