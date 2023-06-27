@@ -60,8 +60,8 @@ export const updateHome = async (req, res) => {
 
     const updatedhome = await home.update({
       imgslide: imgslide || imgslide ? imgslide.map((file) => file.name).join(",") : home.imgslide,
-      imghead: imghead.name !== "" ? imghead.name : "",
-      imgfoot: imgfoot.name !== "" ? imgfoot.name : "",
+      imghead: imghead && imghead.name !== "" ? imghead.name : home.imghead,
+      imgfoot: imgfoot && imgfoot.name !== "" ? imgfoot.name : home.imgfoot,
 
       sdt: sdt !== "" ? sdt : "",
       diachi: diachi !== "" ? diachi : "",
