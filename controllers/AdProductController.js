@@ -1,7 +1,5 @@
 import AdProduct from "../models/AdProductModel.js";
-import { validationResult } from "express-validator";
-import fs from "fs";
-import path from "path";
+
 export const getProducts = async (req, res) => {
   try {
     const response = await AdProduct.findAll();
@@ -36,16 +34,7 @@ export const createProduct = async (req, res) => {
     const { id_nhacungcap } = req.body;
     const { id_loailon } = req.body;
     const { id_loai } = req.body;
-    const { color } = req.body;
-    const { donvitinh } = req.body;
-    const { dinhluong } = req.body;
-    const { chatlieu } = req.body;
-    const { donggoi } = req.body;
-    const { khogiay } = req.body;
-    const { xuatxu } = req.body;
-    const { kichthuoc } = req.body;
-    const { thuonghieu } = req.body;
-    const { thetich } = req.body;
+   
     const { url } = req.body;
 
 
@@ -60,16 +49,7 @@ export const createProduct = async (req, res) => {
       id_nhacungcap,
       id_loailon,
       id_loai,
-      color,
-      donvitinh,
-      dinhluong,
-      chatlieu,
-      donggoi,
-      khogiay,
-      xuatxu,
-      kichthuoc,
-      thuonghieu,
-      thetich,
+     
       url,
       visible: 0
     });
@@ -83,7 +63,7 @@ export const createProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const { tensp, mota, mota_chinh, dongia, giacu, id_nhacungcap, id_loailon, id_loai, color, donvitinh, dinhluong, chatlieu, donggoi, khogiay, xuatxu, kichthuoc, thuonghieu, thetich, url } = req.body;
+    const { tensp, mota, mota_chinh, dongia, giacu, id_nhacungcap, id_loailon, id_loai, url } = req.body;
     const { img, img_con } = req.files || {};
     const product = await AdProduct.findOne({ where: { id: req.params.id } });
 
@@ -99,16 +79,7 @@ export const updateProduct = async (req, res) => {
       id_nhacungcap: id_nhacungcap || product.id_nhacungcap,
       id_loailon: id_loailon || product.id_loailon,
       id_loai: id_loai || product.id_loai,
-      color: color !== "" ? color : "",
-      donvitinh: donvitinh !== "" ? donvitinh : "",
-      dinhluong: dinhluong !== "" ? dinhluong : "",
-      chatlieu: chatlieu !== "" ? chatlieu : "",
-      donggoi: donggoi !== "" ? donggoi : "",
-      khogiay: khogiay !== "" ? khogiay : "",
-      xuatxu: xuatxu !== "" ? xuatxu : "",
-      kichthuoc: kichthuoc !== "" ? kichthuoc : "",
-      thuonghieu: thuonghieu !== "" ? thuonghieu : "",
-      thetich: thetich !== "" ? thetich : "",
+     
       url: url || product.url,
     });
 
