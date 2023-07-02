@@ -22,16 +22,7 @@ const Product = db.define('sanphams',{
  
     id_loailon: DataTypes.INTEGER,
     id_loai: DataTypes.STRING,
-    color: DataTypes.STRING,
-    donvitinh: DataTypes.STRING,
-    dinhluong: DataTypes.STRING,
-    chatlieu: DataTypes.STRING,
-    donggoi: DataTypes.STRING,
-    khogiay: DataTypes.STRING,
-    xuatxu: DataTypes.STRING,
-    kichthuoc: DataTypes.STRING,
-    thuonghieu: DataTypes.STRING,
-    thetich: DataTypes.STRING,
+   
     url: DataTypes.STRING,
     visible: DataTypes.INTEGER,
 },{
