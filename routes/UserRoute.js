@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/account/register', userRegister);
 router.post('/account/login', userLogin);
 router.post('/account/refresh', userRefresh);
-router.post('/account/logout',verifyToken, userLogout);
+router.post('/account/logout', userLogout);
 router.get('/account/:makh',verifyToken, getUserByMakh);
 router.patch('/account/edit/:makh', editUser);
 router.get('/account/tenkh/:makh',getTenkh);
