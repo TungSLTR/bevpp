@@ -2,12 +2,16 @@ import AdMenu from "../models/AdMenuModel.js";
 
 export const getMenus = async (req, res) => {
   try {
-    const response = await AdMenu.findAll();
-    res.status(200).json(response);
-  } catch (error) {
-    console.log(error.message);
+    const menus = await AdMenu.findAll({
+      order: [['id', 'ASC']] // Sắp xếp theo ID tăng dần
+    });
+    res.json(menus);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 export const getMenuById = async (req, res) => {
   try {

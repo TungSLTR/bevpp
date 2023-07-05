@@ -31,7 +31,7 @@ export const createProduct = async (req, res) => {
     const { mota, mota_chinh } = req.body;
     const { dongia, giacu } = req.body;
     const { img, img_con } = req.files;
-    const { id_nhacungcap } = req.body;
+   
     const { id_loailon } = req.body;
     const { id_loai } = req.body;
    
@@ -46,7 +46,7 @@ export const createProduct = async (req, res) => {
       dongia,
       img: img.name,
       img_con: img_con.map((file) => file.name).join(","),
-      id_nhacungcap,
+  
       id_loailon,
       id_loai,
      
@@ -63,7 +63,7 @@ export const createProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const { tensp, mota, mota_chinh, dongia, giacu, id_nhacungcap, id_loailon, id_loai, url } = req.body;
+    const { tensp, mota, mota_chinh, dongia, giacu, id_loailon, id_loai, url } = req.body;
     const { img, img_con } = req.files || {};
     const product = await AdProduct.findOne({ where: { id: req.params.id } });
 
@@ -76,7 +76,7 @@ export const updateProduct = async (req, res) => {
       giacu: giacu || 0, // Set giacu to 0 if it's empty
       img: img ? img.name : product.img,
       img_con: img_con || img_con ? img_con.map((file) => file.name).join(",") : product.img_con,
-      id_nhacungcap: id_nhacungcap || product.id_nhacungcap,
+    
       id_loailon: id_loailon || product.id_loailon,
       id_loai: id_loai || product.id_loai,
      
