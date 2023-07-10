@@ -268,3 +268,26 @@ var transporter = nodemailer.createTransport({
         console.log(error);
     }
   }
+  export const getAllUser = async (req, res) => {
+    try {
+        const user = await User.findAll({
+            attributes: { exclude: ['matkhau', 'accessToken','resetCode'] },
+            order: [['makh', 'ASC']],
+        })
+        res.status(200).json(user);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const deleteUser = async (req, res) => {
+    try {
+        const {makh} = req.params
+         await User.destroy({where :{
+            makh : makh
+        }})
+        res.status(200).json({msg:"User destroyed successfully"})
+      } catch (error) {
+        console.log(error);
+      }
+}
