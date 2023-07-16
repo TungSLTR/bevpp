@@ -1,5 +1,4 @@
 import express from "express";
-
 import { getCateProd, getCateProdById, createCateProd, updateCateProd, deleteCateProd, updateCateProdKeo } from "../controllers/AdCateProdController.js";
 const router = express.Router();
 

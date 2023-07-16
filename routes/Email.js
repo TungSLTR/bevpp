@@ -28,7 +28,7 @@ router.post('/admin/payment/mail-thanhtoan', (req, res) => {
               <p>Cảm ơn bạn đã tin tưởng và mua sản phẩm của chúng tôi. Sản phẩm sẽ sớm đến tay bạn.</p>
               <p>Bạn có thể xem chi tiết hóa đơn bằng cách nhấp vào nút dưới đây:</p>
               <p style="text-align: center;">
-                <a href="https://fevpp.vercel.app/account/cart" style="display: inline-block; background-color: #4CAF50; color: #FFFFFF; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Xem hóa đơn</a>
+                <a href="https://gamezone-nu/account/cart" style="display: inline-block; background-color: #4CAF50; color: #FFFFFF; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Xem hóa đơn</a>
               </p>
             </div>
           </div>

@@ -1,10 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
-
 dotenv.config();
-
 import FileUpload from "express-fileupload";
 import menuRoute from "./routes/MenuRoute.js";
 import productRoute from "./routes/ProductRoute.js";
@@ -26,19 +23,8 @@ import AdContact from "./routes/AdContactRoute.js";
 import Receipt from "./routes/ReceiptRoute.js";
 import Cthoadon from "./routes/CTHDRoute.js";
 import Email from "./routes/Email.js"
-
 const app = express();
-
-// async function handleUpload(file, folder) {
-//   const res = await cloudinary.uploader.upload(file, {
-//     resource_type: "auto",
-//     folder: folder,
-//   });
-//   return res;
-// }
-
 app.use(cors());
-
 app.use(cookieParser());
 app.use(express.json());
 app.use(FileUpload());

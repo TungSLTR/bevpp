@@ -1,8 +1,6 @@
 import {Sequelize} from "sequelize";
 import db from "../config/Database.js";
-
 const {DataTypes} = Sequelize;
-
 const User = db.define('user',{
     makh: {
         type: DataTypes.INTEGER,
@@ -21,14 +19,11 @@ const User = db.define('user',{
     },
     resetCode : {
         type : DataTypes.INTEGER,
-
     }
 },{
     freezeTableName:true
 });
-
 export default User;
-
 (async()=>{
     await db.sync();
 })();
